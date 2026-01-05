@@ -51,6 +51,40 @@ export default function SeatingChart() {
     reserved: "bg-[#16424a] text-white shadow",
   };
 
+  const renderRow = (row, gap, spaceY) => (
+    <div className={spaceY}>
+      <div className={`flex justify-center ${gap}`}>
+        {row.seats.map((num) => {
+          const status = getSeatStatus(num);
+          const disabled = isSeatDisabled(num);
+
+          return (
+            <button
+              key={num}
+              disabled={disabled}
+              className={`
+                ${seatSize}
+                rounded-sm flex items-center justify-center
+                font-medium transition
+                ${statusStyle[status]}
+                ${
+                  disabled ? "opacity-60 cursor-not-allowed" : "active:scale-95"
+                }
+              `}
+            >
+              {num}
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+
+  const topRow = seatLayout.find((r) => r.rowId === "top");
+  const midRow1 = seatLayout.find((r) => r.rowId === "mid-1");
+  const midRow2 = seatLayout.find((r) => r.rowId === "mid-2");
+  const bottomRow = seatLayout.find((r) => r.rowId === "bottom");
+
   return (
     <div className="w-full overflow-hidden flex justify-center px-2">
       <div className="w-full max-w-[360px] sm:max-w-[520px] md:max-w-[640px]">
@@ -72,53 +106,35 @@ export default function SeatingChart() {
                   </div>
                 ))}
               </div>
+              {/* TOP ROW */}
+              <div className="flex flex-col">
+                <div className="mb-10">
+                  {renderRow(topRow, "gap-[0.8vw] sm:gap-2", "")}
+                </div>
 
-              {/* MAIN SEATS */}
-              <div className="space-y-[2vw] sm:space-y-2">
-                {seatLayout.map((row) => (
-                  <div
-                    key={row.rowId}
-                    className="flex justify-center gap-[1vw] sm:gap-2"
-                  >
-                    {row.seats.map((num) => {
-                      const status = getSeatStatus(num);
-                      const disabled = isSeatDisabled(num);
+                {/* MIDDLE ROWS (TOGETHER IN COLUMN) */}
+                <div className="flex flex-col gap-[3vw] sm:gap-3">
+                  {renderRow(midRow1, "gap-[1vw] sm:gap-2", "")}
+                  {renderRow(midRow2, "gap-[1vw] sm:gap-2", "")}
+                </div>
 
-                      return (
-                        <button
-                          key={num}
-                          disabled={disabled}
-                          className={`
-                            ${seatSize}
-                            rounded-sm flex items-center justify-center
-                            font-medium transition
-                            ${statusStyle[status]}
-                            ${
-                              disabled
-                                ? "opacity-60 cursor-not-allowed"
-                                : "active:scale-95"
-                            }
-                          `}
-                        >
-                          {num}
-                        </button>
-                      );
-                    })}
-                  </div>
-                ))}
+                {/* BOTTOM ROW */}
+                <div className="mt-10">
+                  {renderRow(bottomRow, "gap-[0.8vw] sm:gap-2", "")}
+                </div>
               </div>
             </div>
           </div>
         </div>
 
         {/* LEGEND */}
-        <div className="mt-3 flex justify-center">
+        {/* <div className="mt-3 flex justify-center">
           <div className="flex gap-4 text-[11px] sm:text-sm">
             <Legend color="bg-[#16424a]" label="Reserved" />
             <Legend color="bg-blue-500" label="Booked" />
             <Legend color="bg-gray-200 border border-gray-300" label="Open" />
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

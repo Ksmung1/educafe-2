@@ -51,7 +51,9 @@ export default function Home() {
           <h1 className="text-black tracking-widest font-black text-2xl">
             Welcome to EDUCAFE!
           </h1>
-          <p>A quiet place for those who are truly trying.</p>
+          <p className="text-xs font-light leading-tight">
+            A quiet place for those who are truly trying.
+          </p>
           <div className="text-sm md:text-lg text-justify font-light mt-6 flex flex-col gap-2">
             <p>
               Some arrive for their first important exam. Some return with
@@ -65,7 +67,9 @@ export default function Home() {
             </p>
             <p>
               Here, you learn at your own pace, pausing, reflecting, restarting
-              stronger, and growing steadily with time. <br className="mt-6" />
+              stronger, and growing steadily with time.
+            </p>
+            <p>
               Whether your path leads through Boards, NEET, JEE, SSC, Banking,
               or UPSC, this space honours your commitment.
             </p>
@@ -89,7 +93,7 @@ export default function Home() {
 
       {/* TIMELINE */}
       <section className="py-10">
-        <h1 className="text-center tracking-widest text-[#16424a] font-black text-lg md:text-2xl mb-6">
+        <h1 className="text-center tracking-widest text-[#16424a] font-black text-2xl md:text-4xl mb-6">
           Chronological Exam Timeline – 2026
         </h1>
 
@@ -116,7 +120,7 @@ export default function Home() {
               {chronologies.map((item, i) => (
                 <tr
                   key={i}
-                  className="border-t border-green-200 hover:bg-green-50 transition"
+                  className="border-t border-[#16424a] hover:green-[#16424a] transition"
                 >
                   <td className="px-2 py-2 md:px-4 md:py-3    text-xs md:text-sm font-medium">
                     {item.exam}
@@ -158,7 +162,11 @@ export default function Home() {
               </div>
 
               <p className="mt-3 font-semibold text-gray-800 text-sm md:text-base">
-                {p.gender === "male" ? "Mr. " : "Ms. "}
+                {p.gender === "male"
+                  ? "Mr. "
+                  : p.gender === "female"
+                  ? "Ms. "
+                  : "Dr. "}
                 {p.name}
               </p>
 
@@ -169,6 +177,28 @@ export default function Home() {
               </p>
             </div>
           ))}
+          <div
+            key={"sildjl"}
+            className="flex flex-col items-center text-center bg-white rounded-xl shadow-md p-4 hover:shadow-lg transition"
+          >
+            <div className="w-24 h-24 md:w-28 md:h-28 rounded-full overflow-hidden border-4 border-[#16424a]">
+              <img
+                src="https://i.pinimg.com/1200x/54/6b/0a/546b0a6d1b6bb7268b4a1faacab536c6.jpg"
+                alt=""
+                className="w-full h-full object-cover object-center scale-115"
+              />
+            </div>
+
+            <p className="mt-3 font-semibold text-gray-800 text-sm md:text-base">
+              You can be the Next Achiever.
+            </p>
+
+            <p className="text-xs md:text-sm text-gray-600">Can you?</p>
+
+            <p className="text-xs md:text-sm font-medium text-[#16424a]">
+              
+            </p>
+          </div>
         </div>
       </section>
     </div>

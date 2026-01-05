@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import educafe1 from "@/assets/educafe1.png";
 import educafe2 from "@/assets/educafe2.png";
 import educafe3 from "@/assets/educafe3.png";
@@ -52,11 +52,10 @@ export default function InfiniteSlider() {
     educafe19,
     educafe20,
     educafe21,
-    educafe22,
     educafe23,
+    educafe22,
   ];
 
-  // Clone slides for infinite effect
   const slides = [
     ...images.slice(-VISIBLE),
     ...images,
@@ -65,21 +64,25 @@ export default function InfiniteSlider() {
 
   const [index, setIndex] = useState(VISIBLE);
   const [isTransitioning, setIsTransitioning] = useState(true);
+  const timerRef = useRef(null);
 
-  // Auto slide
-  useEffect(() => {
-    const id = setInterval(() => {
-      next();
+  // 🔁 Start / Restart Auto Slide
+  const startAutoSlide = () => {
+    clearInterval(timerRef.current);
+    timerRef.current = setInterval(() => {
+      setIndex((i) => i + 1);
     }, SLIDE_INTERVAL);
+  };
 
-    return () => clearInterval(id);
+  useEffect(() => {
+    startAutoSlide();
+    return () => clearInterval(timerRef.current);
   }, []);
 
-  // Handle infinite looping WITHOUT visual jump
+  // Infinite loop correction
   useEffect(() => {
     if (!isTransitioning) return;
 
-    // After sliding past the last real slide
     if (index === slides.length - VISIBLE) {
       setTimeout(() => {
         setIsTransitioning(false);
@@ -87,7 +90,6 @@ export default function InfiniteSlider() {
       }, TRANSITION_MS);
     }
 
-    // Sliding backwards past first real slide
     if (index === 0) {
       setTimeout(() => {
         setIsTransitioning(false);
@@ -96,18 +98,22 @@ export default function InfiniteSlider() {
     }
   }, [index, isTransitioning, slides.length]);
 
-  // Re-enable transition after silent reset
   useEffect(() => {
     if (!isTransitioning) {
-      requestAnimationFrame(() => {
-        setIsTransitioning(true);
-      });
+      requestAnimationFrame(() => setIsTransitioning(true));
     }
   }, [isTransitioning]);
 
-  const next = () => setIndex((i) => i + 1);
-  const prev = () => setIndex((i) => i - 1);
+  // ⬅️➡️ Manual controls (RESET TIMER)
+  const next = () => {
+    startAutoSlide();
+    setIndex((i) => i + 1);
+  };
 
+  const prev = () => {
+    startAutoSlide();
+    setIndex((i) => i - 1);
+  };
   return (
     <div className="relative w-full overflow-hidden">
       {/* Slider Track */}
@@ -134,6 +140,20 @@ export default function InfiniteSlider() {
           </div>
         ))}
       </div>
+      {/* CONTROLS */}
+      <button
+        onClick={prev}
+        className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/40 text-white px-3 py-1 rounded hover:bg-black/60"
+      >
+        ‹
+      </button>
+
+      <button
+        onClick={next}
+        className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/40 text-white px-3 py-1 rounded hover:bg-black/60"
+      >
+        ›
+      </button>
     </div>
   );
 }

@@ -1,10 +1,10 @@
 import React from "react";
-import Footer from "../components/Footer";
+import InfiniteSlider from "../components/InfiniteSlider";
 
 const page = () => {
   return (
     <div>
-      <Footer />
+      <InfiniteSlider />
     </div>
   );
 };

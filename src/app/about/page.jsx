@@ -1,14 +1,15 @@
 import React from "react";
 
 const facilities = [
-  "Air Conditioner",
+  "Air Conditioned",
   "High-Speed Wi-Fi Connectivity",
-  "Comfortable Seating",
-
-  "CCTV Surveillance",
-  "Parking Facility",
-  "Wheelchair Accessibility",
-  "Books & Reference Materials",
+  "Clean Drinking Water",
+  "Spacious Cabins",
+  "24 Hour House Supply",
+  "Daily Newspapers, Magazines, Books & Study Materials",
+  "Discussion Area",
+  "Leisure Space",
+  "Cafeteria and More",
 ];
 
 const seatingPlans = [

@@ -12,7 +12,8 @@ const Navbar = () => {
   const navItems = [
     { name: "Home", link: "/" },
     { name: "SeatChart", link: "/seating" },
-    { name: "VIDEO", link: "/video" },
+    { name: "Animated Video", link: "/video" },
+    { name: "gallery", link: "/gallery" },
     { name: "About", link: "/about" },
   ];
 
@@ -49,7 +50,10 @@ const Navbar = () => {
               {nav.name}
             </button>
           ))}
-          <button className="bg-[#16424a] ml-20 font-semibold py-1 px-4 rounded-sm text-white">
+          <button
+            onClick={() => router.push("/contact")}
+            className="bg-[#16424a] ml-10 font-semibold py-1 px-4 rounded-sm text-white"
+          >
             Contact us
           </button>
         </div>
